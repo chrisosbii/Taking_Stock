@@ -1,32 +1,42 @@
-//
-// GENERIC CODE
-// UPDATE EVENTUALLY
-//
-
-const { Tech, Matchup } = require('../models');
+const { User, Stock } = require('../models');
 
 const resolvers = {
   Query: {
-    tech: async () => {
-      return Tech.find({});
+    users: async (parent, args, context) => {
+      // Find and return all users from the database
+      return await User.find();
     },
-    matchups: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return Matchup.find(params);
+    user: async (parent, args, context) => {
+      // Find and return a single user by ID
+      return await User.findById(args.id);
+    },
+    stocks: async (parent, args, context) => {
+      // Find and return all stocks from the database
+      return await Stock.find();
+    },
+    stock: async (parent, args, context) => {
+      // Find and return a single stock by symbol
+      return await Stock.findOne({ symbol: args.symbol });
     },
   },
   Mutation: {
-    createMatchup: async (parent, args) => {
-      const matchup = await Matchup.create(args);
-      return matchup;
+    addUser: async (parent, args, context) => {
+      // Create a new user and save it to the database
+      const user = new User(args);
+      await user.save();
+      return user;
     },
-    createVote: async (parent, { _id, techNum }) => {
-      const vote = await Matchup.findOneAndUpdate(
-        { _id },
-        { $inc: { [`tech${techNum}_votes`]: 1 } },
-        { new: true }
-      );
-      return vote;
+    addFavoriteStock: async (parent, args, context) => {
+      // Find the user and stock by ID
+      const user = await User.findById(args.userId);
+      const stock = await Stock.findOne({ symbol: args.stockSymbol });
+
+      // Add the stock to the user's favorite stocks
+      user.favoriteStocks.push(stock);
+      await user.save();
+
+      // Return the updated user
+      return user;
     },
   },
 };

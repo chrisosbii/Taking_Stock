@@ -29,7 +29,8 @@ const startApolloServer = async () => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   } 
-
+  
+  db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);

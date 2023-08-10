@@ -1,9 +1,4 @@
-//
-// GENERIC CODE
-// UPDATE EVENTUALLY
-//
+const User = require('./User');
+const Stock = require('./Stock');
 
-const Tech = require('./Tech');
-const Matchup = require('./Matchup');
-
-module.exports = { Tech, Matchup };
+module.exports = { User, Stock };

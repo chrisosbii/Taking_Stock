@@ -1,30 +1,27 @@
-//
-// GENERIC CODE
-// UPDATE EVENTUALLY
-//
-
 const typeDefs = `
-  type Tech {
-    _id: ID!
-    name: String!
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    favoriteStocks: [Stock]
   }
 
-  type Matchup {
-    _id: ID!
-    tech1: String!
-    tech2: String!
-    tech1_votes: Int
-    tech2_votes: Int
+  type Stock {
+    symbol: String!
+    name: String!
+    price: Float!
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    users: [User]
+    user(id: ID!): User
+    stocks: [Stock]
+    stock(symbol: String!): Stock
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    addUser(username: String!, email: String!): User
+    addFavoriteStock(userId: ID!, stockSymbol: String!): User
   }
 `;
 
