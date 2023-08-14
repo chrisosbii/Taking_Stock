@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { useMutation, useQuery } from '@apollo/client';
+import { REGISTER_USER } from '../utils/mutations';
+
+const SignUpForm = () => {
+    const [email, setEmail,] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword,] = useState('')
+
+    const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+          const { data } = await registerUser({
+            variables: { email, username, password },
+          });
+    
+          // Do something with the response data if needed
+    
+          console.log('User registered successfully:', data);
+    
+          // Clear the input fields after successful registration
+          setEmail('');
+          setUsername('');
+          setPassword('');
+        } catch (err) {
+          console.error('Registration error:', err);
+        }
+      };
+
+    return (
+        <form onSubmit={handleSubmit}>
+        <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@example.com" id="email" name="email"/>      
+            <label htmlFor="username">username</label>
+            <input value={username} onChange={(e) => setUsername(e.target.value)}type="username" placeholder="username" id="username" name="username"/>      
+            <label htmlFor="password">password</label>
+            <input value={password} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="password" id="password" name="password"/> 
+            <button type="submit">Sign Up</button>
+            <p>Already have a login?</p>
+            <Link to="/Login">
+                <button className="btn btn-lg btn-primary">Back</button>
+            </Link>
+    </form>
+    )
+    }
+
+
+export default SignUpForm
