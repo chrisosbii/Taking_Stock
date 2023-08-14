@@ -9,6 +9,9 @@ export default function Home() {
       <Link to="/NextPage">
           <button className="btn btn-lg btn-danger">To Next Page</button>
         </Link>
+        <Link to="/Login">
+          <button className="btn btn-lg btn-danger">Login</button>
+        </Link>
     </div>
   );
 }

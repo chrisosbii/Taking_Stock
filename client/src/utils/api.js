@@ -19,6 +19,7 @@ export const createUser = (userData) => {
 };
 
 export const loginUser = (userData) => {
+    console.log('\n\n\n\n', "HITTING!!!!!", '\n\n\n')
     return fetch('/api/users/login', {
         method: 'POST',
         headers: {
