@@ -7,6 +7,9 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp'
 import NextPage from './pages/NextPage';
 import NotFound from './pages/NotFound';
+import { element } from 'prop-types';
+import UserProfile from './pages/UserProfile.jsx';
+// import UserProfile from './pages/UserProfile.jsx';
 
 
 const router = createBrowserRouter([
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
       }, {
         path: '/SignUp',
         element: <SignUp />
+      }, 
+      {
+        path: '/UserProfile',
+        element: <UserProfile />
       },
       {
         path: '*', // This is a catch-all route
