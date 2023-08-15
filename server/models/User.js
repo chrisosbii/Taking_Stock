@@ -1,11 +1,12 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model} = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true,
   },
   password: {
     type: String,
@@ -14,16 +15,21 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
-  favoriteStocks: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Stock'
-  }]
+
+  favoriteStocks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Stock'
+  
+    },
+  ],
 });
 
 // set up pre-save middleware to create password
@@ -41,6 +47,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

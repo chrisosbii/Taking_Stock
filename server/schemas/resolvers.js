@@ -1,4 +1,5 @@
 const { User, Stock } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -8,8 +9,14 @@ const resolvers = {
     },
     user: async (parent, args, context) => {
       // Find and return a single user by ID
-      return await User.findById(args.id);
+      //return await User.findById(args.id);
+
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('favoriteStocks');
+      }
+      throw AuthenticationError;
     },
+    
     stocks: async (parent, args, context) => {
       // Find and return all stocks from the database
       return await Stock.find();
@@ -20,23 +27,51 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, args, context) => {
+    addUser: async (parent, { username, email, password }, context) => {
       // Create a new user and save it to the database
-      const user = new User(args);
-      await user.save();
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
       return user;
     },
-    addFavoriteStock: async (parent, args, context) => {
-      // Find the user and stock by ID
-      const user = await User.findById(args.userId);
-      const stock = await Stock.findOne({ symbol: args.stockSymbol });
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
-      // Add the stock to the user's favorite stocks
-      user.favoriteStocks.push(stock);
-      await user.save();
+      if (!user) {
+        throw AuthenticationError;
+      }
 
-      // Return the updated user
-      return user;
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    // will use context user's id to find one user and then add a stock id to the favorite set
+    addFavoriteStock: async (parent, { stockId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          {_id: context.user._id},
+          { $addToSet: { favoriteStocks: { stockId } } }
+        );
+
+        return user;
+      }
+      throw AuthenticationError;
+    },
+    // will use context user's id to find one user and then add a stock id to the favorite set
+    removeFavoriteStock: async (parent, { stockId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          {_id: context.user._id},
+          { $pull: { favoriteStocks: { stockId } } }
+        );
+        return user;
+      }
+      throw AuthenticationError;
     },
   },
 };
