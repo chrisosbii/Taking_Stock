@@ -13,6 +13,13 @@ const server = new ApolloServer({
   resolvers,
 });
 
+// uncomment the below lines to have the server fetch data
+// BEWARE, VITE will cause server to restart multiple times during normal development process
+// causing multiple API calls
+
+// const apiController = require('./controllers/api/twelveData');
+// app.use('/td', apiController);
+
 const startApolloServer = async () => {
   await server.start();
   
