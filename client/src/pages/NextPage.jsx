@@ -1,44 +1,48 @@
-import { Link } from "react-router-dom";
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_USERS } from '../utils/queries';
-import { ADD_USER } from "../utils/mutations";
+import { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_STOCKS } from '../utils/queries';
 
 export default function Home() {
-
-  const { loading, error, data } = useQuery(GET_USERS);
-  const [addUser] = useMutation(ADD_USER);
+  const { loading, error, data } = useQuery(GET_STOCKS);
+  const [expandedStock, setExpandedStock] = useState(null);
 
   if (loading) return <p>Loading...</p>;
-  if (error) {
-    console.log(error)
-    return <p>Error</p>;
-  }
+  if (error) return <p>Error: {error.message}</p>;
 
-  return (
-    <div className="card bg-white card-rounded w-50">
+  const handleStockClick = (symbol) => {
+    setExpandedStock(symbol === expandedStock ? null : symbol);
+  };
 
-      <div>WELCOME TO NEXT PAGE</div>
-      <Link to="/">
-        <button className="btn btn-lg btn-danger">Back Home</button>
-      </Link>
-
-
-      <div>
-      <h2>Users</h2>
-      <ul>
-        {data.users.map(user => (
-          <li key={user.id}>
-            {user.username} ({user.email})
-          </li>
-        ))}
-      </ul>
-      <button onClick={() => addUser({ variables: { username: 'newuser', email: 'newuser@example.com' } })}>
-        Add User
-      </button>
+  return data.stocks.map((stock) => (
+    <div key={stock.symbol} onClick={() => handleStockClick(stock.symbol)}>
+      <h3>{stock.name} ({stock.symbol})</h3>
+      <p>Exchange: {stock.exchange}</p>
+      <p>MIC Code: {stock.mic_code}</p>
+      <p>Currency: {stock.currency}</p>
+      <p>Date: {stock.datetime}</p>
+      <p>Timestamp: {stock.timestamp}</p>
+      <p>Open: {stock.open}</p>
+      <p>High: {stock.high}</p>
+      <p>Low: {stock.low}</p>
+      <p>Close: {stock.close}</p>
+      <p>Volume: {stock.volume}</p>
+      <p>Previous Close: {stock.previous_close}</p>
+      <p>Change: {stock.change}</p>
+      <p>Percent Change: {stock.percent_change}</p>
+      <p>Average Volume: {stock.average_volume}</p>
+      <p>Is Market Open: {stock.is_market_open ? 'Yes' : 'No'}</p>
+      <h4>Fifty Two Week</h4>
+      {expandedStock === stock.symbol && (
+        <ul>
+          <li>Low: {stock.fifty_two_week.low}</li>
+          <li>High: {stock.fifty_two_week.high}</li>
+          <li>Low Change: {stock.fifty_two_week.low_change}</li>
+          <li>High Change: {stock.fifty_two_week.high_change}</li>
+          <li>Low Change Percent: {stock.fifty_two_week.low_change_percent}</li>
+          <li>High Change Percent: {stock.fifty_two_week.high_change_percent}</li>
+          <li>Range: {stock.fifty_two_week.range}</li>
+        </ul>
+      )}
     </div>
-
-
-
-    </div>
-  );
+  ));
 }
