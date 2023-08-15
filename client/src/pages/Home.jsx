@@ -12,6 +12,9 @@ export default function Home() {
         <Link to="/Login">
           <button className="btn btn-lg btn-danger">Login</button>
         </Link>
+        <Link to="/UserProfile">
+          <button className="btn btn-lg btn-danger">User Profile Page (for now)</button>
+        </Link>
     </div>
   );
 }
