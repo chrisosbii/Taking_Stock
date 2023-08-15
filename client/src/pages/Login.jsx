@@ -15,14 +15,11 @@ export const LoginForm = () => {
             const { data } = await loginUser({
                 variables: { email, password },
             });
-
             console.log('Data: ', data)
-
             const token = data.loginUser.toke;
         } catch (err) {
             console.error('Login error:', err)
         }
-
     }
 
     return (

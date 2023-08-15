@@ -9,7 +9,32 @@ const typeDefs = `
   type Stock {
     symbol: String!
     name: String!
-    price: Float!
+    exchange: String!
+    mic_code: String!
+    currency: String!
+    datetime: String!
+    timestamp: Int
+    open: String!
+    high: String!
+    low: String!
+    close: String!
+    volume: String!
+    previous_close: String!
+    change: String!
+    percent_change: String!
+    average_volume: String!
+    is_market_open: Boolean
+    fifty_two_week: FiftyTwoWeek
+  }
+  
+  type FiftyTwoWeek {
+    low: String
+    high: String
+    low_change: String
+    high_change: String
+    low_change_percent: String
+    high_change_percent: String
+    range: String
   }
 
   type Query {
@@ -17,6 +42,7 @@ const typeDefs = `
     user(id: ID!): User
     stocks: [Stock]
     stock(symbol: String!): Stock
+    stockz(symbol: String!): Stock
   }
 
   type Mutation {
