@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ user }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -49,6 +49,16 @@ const Header = () => {
         >
           Take the market for a ride
         </p>
+      </div>
+      <div className="header-right">
+        {user ? (
+          <>
+            <Link to="/profile">Profile</Link>
+            <Link to="/logout">Logout</Link>
+          </>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
       </div>
     </header>
   );

@@ -42,3 +42,18 @@ export const GET_STOCKS = gql`
     }
   }
 `;
+
+
+export const GET_STOCKS_AND_FAVORITES = gql`
+  query getStocksAndFavorites($username: String!) {
+    stocks {
+      _id
+      symbol
+      name
+    }
+    user(username: $username) {
+      _id
+      favoriteStocks
+    }
+  }
+`;

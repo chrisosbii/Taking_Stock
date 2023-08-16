@@ -6,15 +6,15 @@ export default function Home() {
   return (
     <div className="card bg-white card-rounded w-50">
       <div>WELCOME HOME</div>
-      <Link to="/NextPage">
-          <button className="btn btn-lg btn-danger">To Next Page</button>
-        </Link>
-        <Link to="/Login">
-          <button className="btn btn-lg btn-danger">Login</button>
-        </Link>
-        <Link to="/UserProfile">
-          <button className="btn btn-lg btn-danger">User Profile Page (for now)</button>
-        </Link>
+      <Link to="/Login">
+        <button className="btn btn-lg btn-danger">Login</button>
+      </Link>
+      <Link to="/UserProfile">
+        <button className="btn btn-lg btn-danger">Profile</button>
+      </Link>
+      <Link to="/Stocks">
+        <button className="btn btn-lg btn-danger">Stocks</button>
+      </Link>
     </div>
   );
 }
