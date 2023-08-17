@@ -10,7 +10,7 @@ import NotFound from './pages/NotFound';
 import { element } from 'prop-types';
 import UserProfile from './pages/UserProfile.jsx';
 // import UserProfile from './pages/UserProfile.jsx';
-
+import './App.css'
 
 const router = createBrowserRouter([
   {
