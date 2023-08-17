@@ -48,6 +48,7 @@ const typeDefs = `
     user: User
     stocks: [Stock]
     stock(symbol: String!): Stock
+    randomStock: Stock
     stockz(symbol: String!): Stock
   }
 
