@@ -8,6 +8,7 @@ const resolvers = {
       return await User.find();
     },
     user: async (parent, args, context) => {
+      console.log(context)
       // Find and return a single user by ID
       //return await User.findById(args.id);
 
@@ -52,12 +53,14 @@ const resolvers = {
     },
     // will use context user's id to find one user and then add a stock id to the favorite set
     addFavoriteStock: async (parent, { stockId }, context) => {
+      console.log(`trying to add ${stockId} to ${context.user.username}`);
       if (context.user) {
+        const stock = await Stock.findOne({ _id: stockId });
         const user = await User.findOneAndUpdate(
           {_id: context.user._id},
-          { $addToSet: { favoriteStocks: { stockId } } }
+          { $addToSet: { favoriteStocks: stock._id } }
         );
-
+          console.log(`updated ${user.username} and added ${stockId}`);
         return user;
       }
       throw AuthenticationError;
@@ -67,7 +70,7 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           {_id: context.user._id},
-          { $pull: { favoriteStocks: { stockId } } }
+          { $pull: { favoriteStocks: stockId } }
         );
         return user;
       }
