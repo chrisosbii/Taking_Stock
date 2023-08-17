@@ -38,4 +38,21 @@
     color: #fff;
   }
   
+  .form-container {
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-control {
+    margin-bottom: 15px;
+  }
+  
+  .btn {
+    margin-top: 15px;
+  }
   
