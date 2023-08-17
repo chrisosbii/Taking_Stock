@@ -70,7 +70,7 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           {_id: context.user._id},
-          { $pull: { favoriteStocks: { stockId } } }
+          { $pull: { favoriteStocks: stockId } }
         );
         return user;
       }
