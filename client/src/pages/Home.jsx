@@ -4,17 +4,24 @@ import { useQuery } from "@apollo/client";
 
 export default function Home() {
   return (
-    <div className="card bg-white card-rounded w-50">
+    <><div className="card bg-white card-rounded w-50">
       <div>WELCOME HOME</div>
-      <Link to="/NextPage">
-          <button className="btn btn-lg btn-danger">To Next Page</button>
-        </Link>
+    </div><div className="card bg-white card-rounded w-50">
         <Link to="/Login">
           <button className="btn btn-lg btn-danger">Login</button>
         </Link>
-        <Link to="/UserProfile">
-          <button className="btn btn-lg btn-danger">User Profile Page (for now)</button>
+      </div><div className="card bg-white card-rounded w-50">
+        <Link to="/NextPage">
+          <button className="btn btn-lg btn-danger">To Next Page</button>
         </Link>
-    </div>
+      </div><div className="card bg-white card-rounded w-50">
+        <Link to="/UserProfile">
+          <button className="btn btn-lg btn-danger">User Profile Page</button>
+        </Link>
+      </div></>
+
   );
 }
+
+  
+        
