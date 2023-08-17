@@ -34,10 +34,14 @@ export default function UserProfile () {
 
   return(
     <div>
-      <div><p>This is where the username goes</p></div>
-      <FavoriteStockList
-        stocks={user.favoriteStocks}
-      />
+      <div>
+        <h3>{user.username}</h3>
+        <p>email: {user.email}</p>
+        <p>Favorite Stocks:</p>
+        <FavoriteStockList
+          stocks={user.favoriteStocks}
+        />
+      </div>
     </div>
       
   )
