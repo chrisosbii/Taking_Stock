@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import '../App.css'
 
-import { Auth } from "../utils/auth";
+import  Auth from "../utils/auth";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
