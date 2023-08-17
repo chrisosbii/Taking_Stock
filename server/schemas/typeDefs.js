@@ -7,6 +7,7 @@ const typeDefs = `
   }
 
   type Stock {
+    id: ID!
     symbol: String!
     name: String!
     exchange: String!
@@ -44,7 +45,7 @@ const typeDefs = `
 
   type Query {
     users: [User]
-    user(id: ID!): User
+    user: User
     stocks: [Stock]
     stock(symbol: String!): Stock
     stockz(symbol: String!): Stock
@@ -53,8 +54,8 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): User
     login(email: String!, password: String!): Auth
-    addFavoriteStock(userId: ID!, stockSymbol: String!): User
-    removeFavoriteStock(userId: ID!, stockSymbol: String!): User
+    addFavoriteStock(stockId: String!): User
+    removeFavoriteStock(stockId: String!): User
   }
 `;
 
