@@ -12,6 +12,8 @@
 
 ## Description
 
+ https://sheltered-stream-34052-1bfa9fe7091b.herokuapp.com/
+
  Taking stock is a stock simulator. Log in and browse some of the biggest stocks. Favorite a stock and track its progress over time. Use this app to hone your skills before having to invest any money.
 
 
