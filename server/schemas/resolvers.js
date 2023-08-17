@@ -1,5 +1,6 @@
 const { User, Stock } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
+require('dotenv').config();
 
 const resolvers = {
   Query: {
@@ -85,6 +86,18 @@ const resolvers = {
           { $pull: { favoriteStocks: stockId } }
         );
         return user;
+      }
+      throw AuthenticationError;
+    },
+    updateStock: async (parent, args, context) => {
+      if (context.user) {
+        const apiKey = process.env.API_KEY;
+        console.log(apiKey);
+        const fetch = (await import('node-fetch')).default;
+        const response = await fetch(`https://api.twelvedata.com/quote?symbol=${args.symbol}&apikey=${apiKey}`);
+        const json = await response.json();
+        console.log(json)
+        return await Stock.findOneAndUpdate({ symbol: args.symbol }, json, {upsert: true, new: true, setDefaultsOnInsert: true});
       }
       throw AuthenticationError;
     },
