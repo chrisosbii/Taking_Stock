@@ -26,6 +26,17 @@ const resolvers = {
       // Find and return a single stock by symbol
       return await Stock.findOne({ symbol: args.symbol });
     },
+    randomStock: async (parent, args, context) => {
+      // Find and return a single stock by symbol
+      if (context.user) {
+        const count = await Stock.count().exec();
+        console.log(`# of stocks = ${count}`)
+        
+        var rand = Math.floor(Math.random() * count);
+        return Stock.findOne().skip(rand);
+      }
+      throw AuthenticationError;
+    },
   },
   Mutation: {
     addUser: async (parent, { username, email, password }, context) => {

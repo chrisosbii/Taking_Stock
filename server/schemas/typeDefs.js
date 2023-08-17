@@ -48,13 +48,14 @@ const typeDefs = `
     user: User
     stocks: [Stock]
     stock(symbol: String!): Stock
+    randomStock: Stock
     stockz(symbol: String!): Stock
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addFavoriteStock(stockId: String!): Auth
+    addFavoriteStock(stockId: String!): User
     removeFavoriteStock(stockId: String!): User
   }
 `;
