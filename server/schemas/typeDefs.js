@@ -52,9 +52,9 @@ const typeDefs = `
   }
 
   type Mutation {
-    registerUser(username: String!, email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): User
     login(email: String!, password: String!): Auth
-    addFavoriteStock(stockId: String!): User
+    addFavoriteStock(stockId: String!): Auth
     removeFavoriteStock(stockId: String!): User
   }
 `;

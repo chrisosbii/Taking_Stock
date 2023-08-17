@@ -28,11 +28,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    registerUser: async (parent, { username, email, password }, context) => {
+    addUser: async (parent, { username, email, password }, context) => {
       // Create a new user and save it to the database
       const user = await User.create({ username, email, password });
       const token = signToken(user);
-      return user;
+      return { token, user };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
