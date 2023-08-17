@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
+import '../App.css'
 
 import Auth from "../utils/auth";
 
@@ -26,8 +27,10 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">email</label>
+    <form onSubmit={handleSubmit} className="form-container">
+    <h2>Login</h2>
+    <div className="form-group">
+      <label htmlFor="email">Email</label>
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -35,8 +38,11 @@ export const LoginForm = () => {
         placeholder="youremail@example.com"
         id="email"
         name="email"
+        className="form-control"
       />
-      <label htmlFor="password">password</label>
+    </div>
+    <div className="form-group">
+    <label htmlFor="password">Password</label>
       <input
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -44,14 +50,17 @@ export const LoginForm = () => {
         placeholder="password"
         id="password"
         name="password"
+        className="form-control"
       />
-      <button type="submit">Log in</button>
+    </div>
+      <button type="submit" className="btn btn-lg btn-primary">Log in</button>
       <p>Don't have a profile yet?</p>
       <Link to="/SignUp">
-        <button className="btn btn-lg btn-danger">Sign Up</button>
+        <button className="btn btn-lg btn-primary">Sign Up</button>
       </Link>
     </form>
   );
 };
 
 export default LoginForm;
+
