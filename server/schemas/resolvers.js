@@ -55,10 +55,10 @@ const resolvers = {
     addFavoriteStock: async (parent, { stockId }, context) => {
       console.log(`trying to add ${stockId} to ${context.user.username}`);
       if (context.user) {
-        //const stock = await Stock.findOne({ stockId });
+        const stock = await Stock.findOne({ _id: stockId });
         const user = await User.findOneAndUpdate(
           {_id: context.user._id},
-          { $addToSet: { favoriteStocks: { stockId } } }
+          { $addToSet: { favoriteStocks: stock._id } }
         );
           console.log(`updated ${user.username} and added ${stockId}`);
         return user;
