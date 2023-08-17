@@ -57,6 +57,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addFavoriteStock(stockId: String!): User
     removeFavoriteStock(stockId: String!): User
+    updateStock(symbol: String!): Stock
   }
 `;
 

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Stock = require('../../models/Stock')
+const Stock = require('../../models/Stock');
+require('dotenv').config();
 
-const apiKey = "974aee72834a4bf1a98e2805ead7d630";
+const apiKey = process.env.API_KEY;
 const symbols = 'AAPL,MSFT,QQQ,RFX'
 const url = `https://api.twelvedata.com/quote?symbol=${symbols}&apikey=${apiKey}`
 
