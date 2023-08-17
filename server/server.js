@@ -41,13 +41,20 @@ const startApolloServer = async () => {
     });
   } 
   
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', () => {
+  if (typeof db.on === 'function') {
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', () => {
+      app.listen(PORT, () => {
+        console.log(`API server running on port ${PORT}!`);
+        console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+      });
+    });
+  } else {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
-  });
+  }
 };
 
 startApolloServer();
