@@ -26,6 +26,7 @@ const resolvers = {
       // Find and return a single stock by symbol
       return await Stock.findOne({ symbol: args.symbol });
     },
+    // borrowed help from https://gist.github.com/BinaryMuse/3453567
     randomStock: async (parent, args, context) => {
       // Find and return a single stock by symbol
       if (context.user) {
