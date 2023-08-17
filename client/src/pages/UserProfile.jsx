@@ -15,7 +15,7 @@ export default function UserProfile () {
 
   const user = data?.user || {};
   
-  console.log(data)
+  console.log(user.username)
 
   // navigate to personal profile page if username is yours
 
