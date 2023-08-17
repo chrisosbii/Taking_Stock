@@ -1,46 +1,46 @@
 
+import { Navigate, useParams } from 'react-router-dom';
+
 import React, {useState} from "react";
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_STOCKS } from '../utils/queries';
-
+import { GET_USER } from '../utils/queries';
+import FavoriteStockList from '../components/FavoriteStockList'
+import Auth from '../utils/auth';
 
 export default function UserProfile () {
+  const { username: userParam } = useParams();
+  const token = Auth.getToken();
+  console.log(token);
+  const { loading, error, data } = useQuery(GET_USER, { context: {headers:{authorization: `Bearer ${token}`}}});
 
-    const { loading, error, data } = useQuery(GET_STOCKS);
-    const [expandedStock, setExpandedStock] = useState(null);
+  const user = data?.user || {};
   
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-  
-    const handleStockClick = (symbol) => {
-      setExpandedStock(symbol === expandedStock ? null : symbol);
-    };
+  console.log(data)
 
-    return(
-        <div className="userPage">
-        <div><p>This is where the username goes</p></div>
-        {/* <div key={stock.symbol} onClick={() => handleStockClick(stock.symbol)}>
-      <h3>{stock.name} ({stock.symbol})</h3>
-      <p>Exchange: {stock.exchange}</p>
-      <p>MIC Code: {stock.mic_code}</p>
-      <p>Currency: {stock.currency}</p>
-      <p>Date: {stock.datetime}</p>
-      <p>Timestamp: {stock.timestamp}</p>
-      <p>Open: {stock.open}</p>
-      <p>High: {stock.high}</p>
-      <p>Low: {stock.low}</p>
-      <p>Close: {stock.close}</p>
-      <p>Volume: {stock.volume}</p>
-      <p>Previous Close: {stock.previous_close}</p>
-      <p>Change: {stock.change}</p>
-      <p>Percent Change: {stock.percent_change}</p>
-      <p>Average Volume: {stock.average_volume}</p>
-      <p>Is Market Open: {stock.is_market_open ? 'Yes' : 'No'}</p>
-      <h4>Fifty Two Week</h4>
-      </div> */}
-        </div>
-        
-    )
+  // navigate to personal profile page if username is yours
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return (
+      <h4>
+        You need to be logged in to see this. Use the navigation links above to
+        sign up or log in!
+      </h4>
+    );
+  }
+
+  return(
+    <div>
+      <div><p>This is where the username goes</p></div>
+      <FavoriteStockList
+        stocks={user.favoriteStocks}
+      />
+    </div>
+      
+  )
 }
 
 

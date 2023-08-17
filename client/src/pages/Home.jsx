@@ -13,7 +13,7 @@ export default function Home() {
       <div>WELCOME HOME</div>
       <div>
           {Auth.loggedIn() ? (
-            <button className="btn btn-lg btn-light m-2" onClick={logout}>
+            <button className="btn btn-lg btn-light m-2" onClick={Auth.logout}>
               Logout
             </button>
           ) : (
