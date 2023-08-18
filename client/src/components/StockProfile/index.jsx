@@ -1,4 +1,4 @@
-const FavoriteStockList = ({
+const StockProfile = ({
     stock
   }) => {
     if (!stock) {
@@ -8,7 +8,7 @@ const FavoriteStockList = ({
     return (
     
       <div> 
-        <div key={stocks._id} className="card mb-3">
+        <div key={stock._id} className="card mb-3">
             <div className="card-body bg-light p-2">
             <p>Name: {stock.name}</p>
             <p>Symbol: {stock.symbol}</p>

@@ -1,18 +1,27 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_STOCKS } from '../utils/queries';
+import { GET_STOCKS, GET_RANDOM_STOCK } from '../utils/queries';
+import StockProfile from '../components/StockProfile'
+import Auth from '../utils/auth';
 
 export default function Home() {
-  const { loading, error, data } = useQuery(GET_STOCKS);
+  const token = Auth.getToken();
+  //const { loading, error, data } = useQuery(GET_STOCKS);
+  const { loading, error, data } = useQuery(GET_RANDOM_STOCK, { context: {headers:{authorization: `Bearer ${token}`}}});
   const [expandedStock, setExpandedStock] = useState(null);
-
+  const stock = data?.stock || {};
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
-  const handleStockClick = (symbol) => {
-    setExpandedStock(symbol === expandedStock ? null : symbol);
-  };
-
+  console.log(data.randomStock);
+  
+  return (
+    <div>
+      <StockProfile
+          stock={data.randomStock}
+        />
+    </div>
+  )
+/*
   return data.stocks.map((stock) => (
     <div key={stock.symbol} onClick={() => handleStockClick(stock.symbol)}>
       <h3>{stock.name} ({stock.symbol})</h3>
@@ -45,4 +54,5 @@ export default function Home() {
       )}
     </div>
   ));
+  */
 }
